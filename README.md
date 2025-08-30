@@ -1,1 +1,1 @@
-# otus_2025_08
+# OTUS Курс "Python QA Engineer"
