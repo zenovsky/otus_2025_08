@@ -4,33 +4,34 @@ from rectangle import Rectangle
 from square import Square
 
 
-def test_rectangle_area(rectangle_integer):
-    side_a, side_b = rectangle_integer
-    r = Rectangle(side_a, side_b)
-    assert r.area == 50, f"Rectangle area with sides {side_a} and {side_b} must be 50"
+@pytest.mark.parametrize(
+    "figure_1, expected_area",
+    [
+        pytest.param(Rectangle(10, 5), 50, id="Rectangle area")
+    ]
+)
+def test_rectangle_area(figure_1, expected_area):
+    assert figure_1.area == expected_area, f"{figure_1} must be {expected_area}"
 
-def test_rectangle_perimeter(rectangle_integer):
-    side_a, side_b = rectangle_integer
-    r = Rectangle(side_a, side_b)
-    assert r.perimeter == 25, f"Perimeter with sides {side_a} and {side_b} must be 25"
+@pytest.mark.parametrize(
+    "figure_1, expected_perimeter",
+    [
+        pytest.param(Rectangle(10, 5), 20, id="Rectangle perimeter")
+    ]
+)
+def test_rectangle_perimeter(figure_1, expected_perimeter):
+    assert figure_1.perimeter == expected_perimeter, f"{figure_1} must be {expected_perimeter}"
 
-def test_rectangle_add_area_with_another_figure(rectangle_integer):
-    side_a, side_b = rectangle_integer
-    s = Square(6)
-    r = Rectangle(side_a, side_b)
-    assert s.add_area(r) == 86, "Sum of areas should be 86"
-
-def test_rectangle_add_area_with_another_rectangle(rectangle_integer):
-    side_a, side_b = rectangle_integer
-    r1 = Rectangle(side_a, side_b)
-    r2 = Rectangle(2, 3)
-    assert r1.add_area(r2) == 56, "Sum of areas should be 56"
-
-def test_rectangle_add_area_with_same_rectangle(rectangle_integer):
-    side_a, side_b = rectangle_integer
-    r1 = Rectangle(side_a, side_b)
-    r2 = Rectangle(side_a, side_b)
-    assert r1.add_area(r2) == 100, "Sum of areas should be 100"
+@pytest.mark.parametrize(
+    "figure_1, figure_2, expected_area",
+    [
+        pytest.param(Rectangle(10, 5), Rectangle(2, 3), 56, id="Rectangle and other rectangle"),
+        pytest.param(Rectangle(10, 5), Rectangle(10, 5), 100, id="Rectangle and same rectangle"),
+        pytest.param(Square(6), Rectangle(10, 5), 86, id="Rectangle and other figure")
+    ]
+)
+def test_add_area(figure_1, figure_2, expected_area):
+    assert figure_1.add_area(figure_2) == expected_area, f"Sum of areas should be {expected_area}"
 
 @pytest.mark.parametrize(
     "side_a, side_b",

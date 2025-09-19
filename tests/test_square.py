@@ -4,33 +4,34 @@ from rectangle import Rectangle
 from square import Square
 
 
-def test_square_area(square_integer):
-    side_a = square_integer
-    s = Square(side_a)
-    assert s.area == 36, f"Square area with side {side_a} must be 36"
+@pytest.mark.parametrize(
+    "figure_1, expected_area",
+    [
+        pytest.param(Square(6), 36, id="Square area")
+    ]
+)
+def test_square_area(figure_1, expected_area):
+    assert figure_1.area == expected_area, f"{figure_1} must be {expected_area}"
 
-def test_square_perimeter(square_integer):
-    side_a = square_integer
-    s = Square(side_a)
-    assert s.perimeter == 18, f"Square with side {side_a} must be 18"
+@pytest.mark.parametrize(
+    "figure_1, expected_perimeter",
+    [
+        pytest.param(Square(6), 18, id="Square perimeter")
+    ]
+)
+def test_square_perimeter(figure_1, expected_perimeter):
+    assert figure_1.perimeter == expected_perimeter, f"{figure_1} must be {expected_perimeter}"
 
-def test_square_add_area_with_another_figure(square_integer):
-    side_a = square_integer
-    s = Square(side_a)
-    r = Rectangle(5, 10)
-    assert r.add_area(s) == 86, "Sum of areas should be 86"
-
-def test_square_add_area_with_another_square(square_integer):
-    side_a = square_integer
-    s1 = Square(side_a)
-    s2 = Square(10)
-    assert s1.add_area(s2) == 136, "Sum of areas should be 136"
-
-def test_square_add_area_with_same_square(square_integer):
-    side_a = square_integer
-    s1 = Square(side_a)
-    s2 = Square(side_a)
-    assert s1.add_area(s2) == 72, "Sum of areas should be 72"
+@pytest.mark.parametrize(
+    "figure_1, figure_2, expected_area",
+    [
+        pytest.param(Square(6), Rectangle(5, 10), 86, id="Square and other figure"),
+        pytest.param(Square(6), Square(10), 136, id="Square and other square"),
+        pytest.param(Square(6), Square(6), 72, id="Square and same figure")
+    ]
+)
+def test_add_area(figure_1, figure_2, expected_area):
+    assert figure_1.add_area(figure_2) == expected_area, f"Sum of areas should be {expected_area}"
 
 @pytest.mark.parametrize(
     "side_a",

@@ -4,34 +4,34 @@ from rectangle import Rectangle
 from triangle import Triangle
 
 
-def test_triangle_area(triangle_integer):
-    side_a, side_b, side_c = triangle_integer
-    t = Triangle(side_a, side_b, side_c)
-    assert t.area == 6.928203230275509, f"Area with sides {side_a}, {side_b} and {side_c} must be 6.928203230275509"
+@pytest.mark.parametrize(
+    "figure_1, expected_area",
+    [
+        pytest.param(Triangle(4,4,4), 6.93, id="Triangle area")
+    ]
+)
+def test_triangle_area(figure_1, expected_area):
+    assert round (figure_1.area, 2) == expected_area, f"{figure_1} must be {expected_area}"
 
-def test_triangle_perimeter(triangle_integer):
-    side_a, side_b, side_c = triangle_integer
-    t = Triangle(side_a, side_b, side_c)
-    assert t.perimeter == 12, f"Triangle perimeter with sides {side_a}, {side_b} and {side_c} must be 12"
+@pytest.mark.parametrize(
+    "figure_1, expected_perimeter",
+    [
+        pytest.param(Triangle(4,4,4), 12, id="Triangle area")
+    ]
+)
+def test_triangle_perimeter(figure_1, expected_perimeter):
+    assert figure_1.perimeter == expected_perimeter, f"{figure_1} must be {expected_perimeter}"
 
-def test_triangle_add_area_with_another_figure(triangle_integer):
-    side_a, side_b, side_c = triangle_integer
-    t = Triangle(side_a, side_b, side_c)
-    r = Rectangle(2, 6)
-    assert r.add_area(t) == 18.928203230275507, "Sum of areas should be 18.928203230275507"
-
-def test_triangle_add_area_with_another_triangle(triangle_integer):
-    side_a, side_b, side_c = triangle_integer
-    t1 = Triangle(side_a, side_b, side_c)
-    t2 = Triangle(3, 4, 5)
-    assert t2.add_area(t1) == 12.928203230275509, "Sum of areas should be 12.928203230275509"
-
-def test_triangle_add_area_with_same_triangle(triangle_integer):
-    side_a, side_b, side_c = triangle_integer
-    t1 = Triangle(side_a, side_b, side_c)
-    t2 = Triangle(side_a, side_b, side_c)
-    assert t1.add_area(t2) == 13.856406460551018, "Sum of areas should be 13.856406460551018"
-
+@pytest.mark.parametrize(
+    "figure_1, figure_2, expected_area",
+    [
+        pytest.param(Triangle(4,4,4), Rectangle(2, 6), 18.93, id="Triangle and other figure"),
+        pytest.param(Triangle(4,4,4), Triangle(3,4,5), 12.93, id="Triangle and other triangle"),
+        pytest.param(Triangle(4,4,4), Triangle(4,4,4), 13.86, id="Triangle and same figure")
+    ]
+)
+def test_add_area(figure_1, figure_2, expected_area):
+    assert round (figure_1.add_area(figure_2), 2) == expected_area, f"Sum of areas should be {expected_area}"
 
 @pytest.mark.parametrize(
     "a, b, c",
