@@ -211,5 +211,5 @@ __marimo__/
 .files/
 files/
 
-# __init__
+# Project specific
 __init__.py
