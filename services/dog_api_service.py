@@ -1,11 +1,12 @@
 from pydantic import ValidationError
-from services.api_client import ApiClient
+
 from models.dog_response_models import (
     ErrorResponse,
     ImagesResponse,
     ListAllBreedsResponse,
     RandomImageResponse,
 )
+from services.api_client import ApiClient
 
 
 class DogApiService:
@@ -51,5 +52,8 @@ class DogApiService:
 
         if response.status_code == 200:
             return self._validate_response(response, ImagesResponse)
-        if response.status_code == 404:
+        elif response.status_code == 404:
             return self._validate_response(response, ErrorResponse, expected_status=404)
+        else:
+            raise AssertionError(
+            f"Unexpected status code {response.status_code}")

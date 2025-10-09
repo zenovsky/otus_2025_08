@@ -1,4 +1,5 @@
 
+
 from pydantic import BaseModel, ValidationError
 
 from models.brewery_response_models import (
@@ -44,10 +45,12 @@ class BreweryApiService:
 
 
     def get_random_brewery(self, size: int = 1) -> list[Brewery]:
+        if size > 50:
+            raise ValueError(f"Size must be <= 50, got {size}")
         url = f"{self.base_url}/breweries/random"
         response = self.client.get(url, params={"size": size})
         if response.status_code != 200:
-            raise AssertionError(f"Expected 200, but got {response.status_code}.")
+            raise AssertionError(f"Expected 200, but got {response.status_code}")
         return self._validate_and_parse(response, BreweryListAdapter)
 
 

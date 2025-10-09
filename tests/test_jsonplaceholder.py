@@ -1,4 +1,5 @@
 import pytest
+
 from services.jsonplaceholder_api_service import JsonPlaceholderApiService
 
 

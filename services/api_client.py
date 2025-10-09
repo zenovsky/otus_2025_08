@@ -11,7 +11,7 @@ class ApiClient:
         try:
             response = self.session.get(url, params=params)
             return response
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             raise
 
     def post(self, url, json=None):
@@ -21,4 +21,4 @@ class ApiClient:
         return requests.put(url, json=json)
 
     def delete(self, url):
-        return requests.delete(url)        
+        return requests.delete(url)

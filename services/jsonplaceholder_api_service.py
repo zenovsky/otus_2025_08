@@ -1,5 +1,6 @@
-from services.api_client import ApiClient
 from models.jsonplaceholder_response_model import Post
+from services.api_client import ApiClient
+
 
 class JsonPlaceholderApiService:
     def __init__(self):
